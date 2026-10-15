@@ -1,15 +1,18 @@
 /* COCO Guest List — velvet-rope invitation style.
    Colours live here so the owner's brand colours can be swapped in one place. */
 :root {
-  --ink: #0f0c0a;          /* page background */
-  --ink-2: #1a1512;        /* card background */
-  --cream: #f3ebe0;        /* main text */
-  --muted: #a89a8a;        /* secondary text */
-  --gold: #c9a46a;         /* accent */
-  --gold-soft: rgba(201, 164, 106, 0.35);
-  --error: #e7937c;
-  --display: "Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
-  --body: "Jost", "Futura", "Century Gothic", sans-serif;
+  --ink: #0f0c0a;          /* dark text / card */
+  --ink-2: #1a1112;        /* card background */
+  --cream: #f3ebe0;        /* COCO letters + text on red */
+  --muted: #a89a8a;        /* secondary text inside the card */
+  --gold: #c9a46a;         /* ONLY for the gold "CO" of the logo — do not reuse */
+  --red-deep: #4a050c;     /* top of the page */
+  --red: #b0101c;
+  --red-text: #6e0a13;     /* dark red text on the light bottom of the page */
+  --line: rgba(255, 255, 255, 0.35);
+  --error: #ff9a8a;
+  --display: "Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif; /* COCO logo only */
+  --body: "Poiret One", "Josefin Sans", "Century Gothic", sans-serif; /* Art Deco */
   --gutter: clamp(16px, 5vw, 64px);
 }
 
@@ -23,15 +26,17 @@ body {
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  background:
-    radial-gradient(120% 70% at 85% -10%, rgba(201, 164, 106, 0.16), transparent 60%),
-    radial-gradient(90% 60% at -10% 110%, rgba(120, 60, 40, 0.22), transparent 60%),
-    var(--ink);
+  /* Red to white, top to bottom. It stays red long enough that the light text
+     above the card is always readable; only the footer sits on the light part. */
+  background: linear-gradient(180deg,
+    var(--red-deep) 0%, #7d0912 28%, var(--red) 52%, #d9545d 72%, #f4c4c7 88%, #ffffff 100%);
+  background-color: var(--red-deep);
   color: var(--cream);
   font-family: var(--body);
-  font-weight: 300;
-  font-size: 17px;
+  font-weight: 400;
+  font-size: 18px;
   line-height: 1.55;
+  letter-spacing: 0.02em;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -58,16 +63,23 @@ body {
 
 @media (min-width: 900px) {
   .page { grid-template-columns: 1.15fr 1fr; }
+  /* Wide screens: the text column is on the left, so the gradient runs left
+     (red) to right (white) and the dark card sits on the light side. */
+  body {
+    background: linear-gradient(100deg,
+      var(--red-deep) 0%, #7d0912 25%, var(--red) 48%, #d9545d 66%, #f4c4c7 84%, #ffffff 100%);
+  }
+  .foot { color: #ffffff; }
 }
 
 /* ---------- Intro / brand ---------- */
 .eyebrow {
   margin: 0 0 18px;
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 13px;
+  font-weight: 400;
   letter-spacing: 0.32em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: #ffffff;
 }
 .eyebrow::before {
   content: "";
@@ -76,7 +88,7 @@ body {
   height: 1px;
   margin-right: 12px;
   vertical-align: middle;
-  background: var(--gold);
+  background: #ffffff;
 }
 
 .brand {
@@ -90,11 +102,13 @@ body {
 .brand-o { font-style: italic; font-weight: 400; color: var(--gold); }
 
 .tagline {
-  margin: 14px 0 0;
-  font-family: var(--display);
-  font-size: clamp(24px, 4.5vw, 36px);
+  margin: 18px 0 0;
+  font-family: var(--body);
+  font-size: clamp(20px, 3.6vw, 28px);
   font-weight: 400;
-  color: var(--cream);
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: #ffffff;
 }
 
 .details {
@@ -102,46 +116,51 @@ body {
   display: grid;
   gap: 0;
   max-width: 440px;
-  border-top: 1px solid var(--gold-soft);
+  border-top: 1px solid var(--line);
 }
 .details div {
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
   gap: 16px;
   padding: 12px 0;
-  border-bottom: 1px solid var(--gold-soft);
+  border-bottom: 1px solid var(--line);
 }
 .details dt {
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.22em;
+  font-size: 17px;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--muted);
-  padding-top: 3px;
+  color: #ffffff;
+  font-weight: 400;
+  text-shadow: 0 0 0.6px #ffffff; /* Poiret One is very thin: a hair thicker */
 }
-.details dd { margin: 0; text-align: right; }
+.details dd { margin: 0; text-align: right; color: rgba(255, 255, 255, 0.82); }
+.details .entry dt, .details .entry dd { color: #ffffff; }
 .placeholder { color: var(--muted); font-style: italic; }
 
 /* ---------- Card ---------- */
 .card {
   position: relative;
-  padding: 1px; /* gold hairline frame */
-  background: linear-gradient(150deg, var(--gold), rgba(201,164,106,0.15) 40%, rgba(201,164,106,0.05) 60%, var(--gold-soft));
+  padding: 1px; /* thin white/red frame */
+  background: linear-gradient(150deg, #ffffff, rgba(255,255,255,0.25) 40%, rgba(176,16,28,0.5) 70%, #ffffff);
   border-radius: 4px;
-  box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 30px 70px -34px rgba(60, 0, 8, 0.55);
 }
 .card-inner {
-  background: linear-gradient(180deg, #1d1713, var(--ink-2));
+  background: linear-gradient(180deg, #221315, var(--ink-2));
   border-radius: 3px;
   padding: clamp(28px, 6vw, 48px);
 }
 
 .card-title {
   margin: 0;
-  font-family: var(--display);
-  font-weight: 500;
-  font-size: clamp(28px, 6vw, 36px);
-  line-height: 1.1;
+  font-family: var(--body);
+  font-weight: 400;
+  font-size: clamp(26px, 5.5vw, 32px);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1.15;
+  color: #ffffff;
 }
 .card-sub { margin: 8px 0 28px; color: var(--muted); }
 
@@ -151,11 +170,11 @@ body {
 label {
   display: block;
   margin-bottom: 6px;
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 400;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: #d9cfc9;
 }
 
 input {
@@ -166,13 +185,14 @@ input {
   border-radius: 0;
   background: transparent;
   color: var(--cream);
-  font: 400 18px/1.3 var(--body);
+  font: 400 19px/1.3 var(--body);
+  letter-spacing: 0.04em;
   transition: border-color 0.25s ease;
   -webkit-appearance: none;
   appearance: none;
 }
 input:hover { border-bottom-color: rgba(243, 235, 224, 0.45); }
-input:focus { outline: none; border-bottom-color: var(--gold); box-shadow: 0 1px 0 0 var(--gold); }
+input:focus { outline: none; border-bottom-color: #ffffff; box-shadow: 0 1px 0 0 #ffffff; }
 input[aria-invalid="true"] { border-bottom-color: var(--error); }
 input:-webkit-autofill {
   -webkit-text-fill-color: var(--cream);
@@ -193,9 +213,10 @@ input:-webkit-autofill {
   padding: 17px 24px;
   border: 0;
   border-radius: 2px;
-  background: var(--gold);
-  color: var(--ink);
-  font: 500 14px/1 var(--body);
+  background: linear-gradient(90deg, #ffffff 0%, #ffe1e3 100%);
+  color: var(--red-text);
+  font: 400 16px/1 var(--body);
+  font-weight: 400;
   letter-spacing: 0.28em;
   text-transform: uppercase;
   cursor: pointer;
@@ -211,7 +232,7 @@ input:-webkit-autofill {
   transition: transform 0.7s ease;
 }
 .btn:hover::after { transform: translateX(120%); }
-.btn:hover { background: #d6b27a; }
+.btn:hover { background: linear-gradient(90deg, #ffffff 0%, #ffc9cd 100%); }
 .btn:active { transform: scale(0.99); }
 .btn:focus-visible { outline: 2px solid var(--cream); outline-offset: 3px; }
 .btn[disabled] { cursor: progress; opacity: 0.85; }
@@ -221,8 +242,8 @@ input:-webkit-autofill {
   width: 16px; height: 16px;
   margin-left: 10px;
   vertical-align: -3px;
-  border: 2px solid rgba(15, 12, 10, 0.3);
-  border-top-color: var(--ink);
+  border: 2px solid rgba(110, 10, 19, 0.3);
+  border-top-color: var(--red-text);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
@@ -232,9 +253,9 @@ input:-webkit-autofill {
 .form-msg:empty { min-height: 0; margin: 0; }
 .form-msg.is-error { color: var(--error); }
 
-.consent { margin: 22px 0 0; font-size: 13px; line-height: 1.5; color: var(--muted); }
-a { color: var(--gold); text-underline-offset: 3px; }
-a:hover { color: var(--cream); }
+.consent { margin: 22px 0 0; font-size: 14px; line-height: 1.5; color: #bfb3ad; }
+a { color: #ffb3b8; text-underline-offset: 3px; }
+a:hover { color: #ffffff; }
 
 /* ---------- Success ---------- */
 .done { text-align: center; padding: 24px 0; outline: none; }
@@ -242,7 +263,7 @@ a:hover { color: var(--cream); }
   display: block;
   width: 64px; height: 64px;
   margin: 0 auto 22px;
-  border: 1px solid var(--gold);
+  border: 1px solid #ffffff;
   border-radius: 50%;
   position: relative;
   animation: pop 0.6s cubic-bezier(.2,.9,.3,1.3) both;
@@ -252,8 +273,8 @@ a:hover { color: var(--cream); }
   position: absolute;
   left: 23px; top: 17px;
   width: 14px; height: 24px;
-  border-right: 2px solid var(--gold);
-  border-bottom: 2px solid var(--gold);
+  border-right: 2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
   transform: rotate(45deg);
 }
 .done .card-sub { margin-bottom: 0; }
@@ -267,8 +288,9 @@ a:hover { color: var(--cream); }
   max-width: 1180px;
   margin: 0 auto;
   padding: 20px var(--gutter) calc(20px + env(safe-area-inset-bottom));
-  font-size: 13px;
-  color: var(--muted);
+  font-size: 14px;
+  letter-spacing: 0.15em;
+  color: var(--red-text); /* the footer sits on the white end of the gradient */
 }
 
 .demo-badge {

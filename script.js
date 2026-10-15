@@ -132,6 +132,9 @@ const CONFIG = {
 
       if (result.ok && result.code === 'duplicate') {
         showDone('Already on the list', result.message);
+      } else if (result.ok && result.queued) {
+        // Saved, but the email is waiting (very busy day, or a temporary problem).
+        showDone('You’re on the list, ' + data.firstName, 'Your spot is saved. We’ll email the details to ' + data.email + ' soon, so please keep an eye on your inbox, spam and Promotions folders.');
       } else if (result.ok) {
         showDone('You’re on the list, ' + data.firstName, 'We’ve sent the details to ' + data.email + '. If it isn’t in your inbox in a few minutes, check your spam or Promotions folder.');
       } else if (result.code === 'invalid' && Array.isArray(result.fields)) {
