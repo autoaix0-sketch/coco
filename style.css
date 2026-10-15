@@ -1,0 +1,296 @@
+/* COCO Guest List — velvet-rope invitation style.
+   Colours live here so the owner's brand colours can be swapped in one place. */
+:root {
+  --ink: #0f0c0a;          /* page background */
+  --ink-2: #1a1512;        /* card background */
+  --cream: #f3ebe0;        /* main text */
+  --muted: #a89a8a;        /* secondary text */
+  --gold: #c9a46a;         /* accent */
+  --gold-soft: rgba(201, 164, 106, 0.35);
+  --error: #e7937c;
+  --display: "Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
+  --body: "Jost", "Futura", "Century Gothic", sans-serif;
+  --gutter: clamp(16px, 5vw, 64px);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background:
+    radial-gradient(120% 70% at 85% -10%, rgba(201, 164, 106, 0.16), transparent 60%),
+    radial-gradient(90% 60% at -10% 110%, rgba(120, 60, 40, 0.22), transparent 60%),
+    var(--ink);
+  color: var(--cream);
+  font-family: var(--body);
+  font-weight: 300;
+  font-size: 17px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Film-grain texture for depth */
+.grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.page {
+  flex: 1;
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: clamp(40px, 8vh, 96px) var(--gutter) 32px;
+  display: grid;
+  gap: clamp(36px, 6vw, 72px);
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .page { grid-template-columns: 1.15fr 1fr; }
+}
+
+/* ---------- Intro / brand ---------- */
+.eyebrow {
+  margin: 0 0 18px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.eyebrow::before {
+  content: "";
+  display: inline-block;
+  width: 28px;
+  height: 1px;
+  margin-right: 12px;
+  vertical-align: middle;
+  background: var(--gold);
+}
+
+.brand {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(88px, 24vw, 220px);
+  line-height: 0.82;
+  letter-spacing: -0.02em;
+}
+.brand-o { font-style: italic; font-weight: 400; color: var(--gold); }
+
+.tagline {
+  margin: 14px 0 0;
+  font-family: var(--display);
+  font-size: clamp(24px, 4.5vw, 36px);
+  font-weight: 400;
+  color: var(--cream);
+}
+
+.details {
+  margin: clamp(28px, 5vh, 48px) 0 0;
+  display: grid;
+  gap: 0;
+  max-width: 440px;
+  border-top: 1px solid var(--gold-soft);
+}
+.details div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--gold-soft);
+}
+.details dt {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-top: 3px;
+}
+.details dd { margin: 0; text-align: right; }
+.placeholder { color: var(--muted); font-style: italic; }
+
+/* ---------- Card ---------- */
+.card {
+  position: relative;
+  padding: 1px; /* gold hairline frame */
+  background: linear-gradient(150deg, var(--gold), rgba(201,164,106,0.15) 40%, rgba(201,164,106,0.05) 60%, var(--gold-soft));
+  border-radius: 4px;
+  box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.8);
+}
+.card-inner {
+  background: linear-gradient(180deg, #1d1713, var(--ink-2));
+  border-radius: 3px;
+  padding: clamp(28px, 6vw, 48px);
+}
+
+.card-title {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(28px, 6vw, 36px);
+  line-height: 1.1;
+}
+.card-sub { margin: 8px 0 28px; color: var(--muted); }
+
+/* ---------- Form ---------- */
+.field { margin-bottom: 18px; }
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+input {
+  width: 100%;
+  padding: 12px 2px 10px;
+  border: 0;
+  border-bottom: 1px solid rgba(243, 235, 224, 0.25);
+  border-radius: 0;
+  background: transparent;
+  color: var(--cream);
+  font: 400 18px/1.3 var(--body);
+  transition: border-color 0.25s ease;
+  -webkit-appearance: none;
+  appearance: none;
+}
+input:hover { border-bottom-color: rgba(243, 235, 224, 0.45); }
+input:focus { outline: none; border-bottom-color: var(--gold); box-shadow: 0 1px 0 0 var(--gold); }
+input[aria-invalid="true"] { border-bottom-color: var(--error); }
+input:-webkit-autofill {
+  -webkit-text-fill-color: var(--cream);
+  -webkit-box-shadow: 0 0 0 1000px var(--ink-2) inset;
+  caret-color: var(--cream);
+}
+
+.err { min-height: 1.2em; margin: 6px 0 0; font-size: 14px; color: var(--error); }
+.err:empty { min-height: 0; margin: 0; }
+
+/* Honeypot: off-screen, not display:none (some bots skip hidden fields) */
+.hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+
+.btn {
+  position: relative;
+  width: 100%;
+  margin-top: 14px;
+  padding: 17px 24px;
+  border: 0;
+  border-radius: 2px;
+  background: var(--gold);
+  color: var(--ink);
+  font: 500 14px/1 var(--body);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  cursor: pointer;
+  overflow: hidden;
+  transition: background 0.25s ease, transform 0.15s ease;
+}
+.btn::after { /* soft shine on hover */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,0.35) 50%, transparent 70%);
+  transform: translateX(-120%);
+  transition: transform 0.7s ease;
+}
+.btn:hover::after { transform: translateX(120%); }
+.btn:hover { background: #d6b27a; }
+.btn:active { transform: scale(0.99); }
+.btn:focus-visible { outline: 2px solid var(--cream); outline-offset: 3px; }
+.btn[disabled] { cursor: progress; opacity: 0.85; }
+
+.btn-spinner {
+  display: none;
+  width: 16px; height: 16px;
+  margin-left: 10px;
+  vertical-align: -3px;
+  border: 2px solid rgba(15, 12, 10, 0.3);
+  border-top-color: var(--ink);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+.btn.is-loading .btn-spinner { display: inline-block; }
+
+.form-msg { min-height: 1.2em; margin: 14px 0 0; font-size: 15px; text-align: center; }
+.form-msg:empty { min-height: 0; margin: 0; }
+.form-msg.is-error { color: var(--error); }
+
+.consent { margin: 22px 0 0; font-size: 13px; line-height: 1.5; color: var(--muted); }
+a { color: var(--gold); text-underline-offset: 3px; }
+a:hover { color: var(--cream); }
+
+/* ---------- Success ---------- */
+.done { text-align: center; padding: 24px 0; outline: none; }
+.done-mark {
+  display: block;
+  width: 64px; height: 64px;
+  margin: 0 auto 22px;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  position: relative;
+  animation: pop 0.6s cubic-bezier(.2,.9,.3,1.3) both;
+}
+.done-mark::after {
+  content: "";
+  position: absolute;
+  left: 23px; top: 17px;
+  width: 14px; height: 24px;
+  border-right: 2px solid var(--gold);
+  border-bottom: 2px solid var(--gold);
+  transform: rotate(45deg);
+}
+.done .card-sub { margin-bottom: 0; }
+
+/* ---------- Footer ---------- */
+.foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 20px var(--gutter) calc(20px + env(safe-area-inset-bottom));
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.demo-badge {
+  position: fixed;
+  left: 50%; top: 10px;
+  transform: translateX(-50%);
+  margin: 0;
+  padding: 6px 12px;
+  border-radius: 99px;
+  background: #3a2a1a;
+  color: var(--gold);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+/* ---------- Motion ---------- */
+.reveal { animation: rise 0.9s cubic-bezier(.2,.7,.2,1) both; animation-delay: calc(var(--d) * 110ms + 100ms); }
+@keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes pop { from { opacity: 0; transform: scale(0.6); } to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
