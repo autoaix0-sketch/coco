@@ -11,6 +11,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..500&family=Poiret+One&display=swap" rel="stylesheet">
+  <!-- Country picker for the phone field (intl-tel-input v29.5.3, MIT), hosted here, not on a CDN. -->
+  <link rel="stylesheet" href="vendor/intl-tel-input/css/intlTelInput.min.css">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -55,6 +57,11 @@
               <input id="email" name="email" type="email" inputmode="email" autocomplete="email" maxlength="254" required aria-describedby="email-err">
               <p class="err" id="email-err" aria-live="polite"></p>
             </div>
+            <div class="field">
+              <label for="phone">Phone number</label>
+              <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="30" required aria-describedby="phone-err">
+              <p class="err" id="phone-err" aria-live="polite"></p>
+            </div>
 
             <!-- Honeypot: hidden from people, bots tend to fill it in. -->
             <div class="hp" aria-hidden="true">
@@ -69,8 +76,8 @@
             <p class="form-msg" id="form-msg" role="status" aria-live="polite"></p>
 
             <p class="consent">
-              By joining, you agree that we store your name and email to manage the guest list
-              and send you the event details.
+              By joining, you agree that we store your name, email and phone number to manage the
+              guest list, send you the event details and invite you to our WhatsApp group.
               <!-- Privacy notice hidden until the owner approves it. To show it again, add:
                    <a href="privacy.html">Privacy notice</a>  (draft is in content/privacy-page-draft.html) -->
             </p>
@@ -93,6 +100,7 @@
 
   <p class="demo-badge" id="demo-badge" hidden>Preview mode — nothing is saved</p>
 
+  <script src="vendor/intl-tel-input/js/intlTelInputWithUtils.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

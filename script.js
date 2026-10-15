@@ -26,13 +26,55 @@ const CONFIG = {
 
   if (previewMode) document.getElementById('demo-badge').hidden = false;
 
+  const FIELDS = ['firstName', 'lastName', 'email', 'phone'];
+
   // Same rules as the backend (backend/Code.gs) so visitors get instant feedback.
   const NAME_RE = /^\p{L}[\p{L}\p{M} .'’-]*$/u;
   const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  const PHONE_RE = /^\+[1-9]\d{6,14}$/; // + country code, then the number: 7 to 15 digits
 
   const clean = (v) => String(v || '').replace(/\s+/g, ' ').trim();
+  const normalizePhone = (v) => String(v || '').replace(/[\s().-]/g, '').replace(/^00/, '+');
 
-  function validate(data) {
+  // Country picker for the phone field (vendor/intl-tel-input): flag, dial code,
+  // search, formatting and Google's phone rules for every country.
+  // If it didn't load, the field still works as a plain box that needs the +code.
+  const phoneInput = form.elements.phone;
+  let iti = null;
+  try {
+    if (window.intlTelInput) {
+      iti = window.intlTelInput(phoneInput, {
+        initialCountry: 'es',
+        countryOrder: ['es', 'gb', 'fr', 'it', 'de', 'nl', 'us'],
+        // WhatsApp needs a mobile. This also accepts "fixed line or mobile" numbers (e.g. the USA).
+        allowedNumberTypes: ['MOBILE'],
+        uiTranslations: { searchPlaceholder: 'Search country' }
+      });
+    }
+  } catch (err) {
+    iti = null;
+  }
+  if (!iti) phoneInput.placeholder = '+34 612 345 678';
+
+  // Returns { number: '+34612345678', error: '' }. The number is only set when it is valid.
+  function readPhone() {
+    if (!phoneInput.value.trim()) return { number: '', error: 'Please enter your phone number.' };
+    if (iti) {
+      if (iti.isValidNumberPrecise()) return { number: iti.getNumber(), error: '' };
+      const reason = iti.getValidationError();
+      if (reason === 'TOO_SHORT') return { number: '', error: 'This number looks too short.' };
+      if (reason === 'TOO_LONG') return { number: '', error: 'This number looks too long.' };
+      if (reason === 'INVALID_COUNTRY_CODE') return { number: '', error: 'Please choose your country.' };
+      if (iti.getNumberType() === 'FIXED_LINE') return { number: '', error: 'Please use a mobile number, so we can add you on WhatsApp.' };
+      return { number: '', error: 'Please enter a valid phone number.' };
+    }
+    const number = normalizePhone(phoneInput.value);
+    if (number[0] !== '+') return { number: '', error: 'Please include your country code, e.g. +34.' };
+    if (!PHONE_RE.test(number)) return { number: '', error: 'Please enter a valid phone number.' };
+    return { number: number, error: '' };
+  }
+
+  function validate(data, phoneError) {
     const errors = {};
     if (!data.firstName) errors.firstName = 'Please enter your first name.';
     else if (data.firstName.length > 60 || !NAME_RE.test(data.firstName)) errors.firstName = 'Please use letters only.';
@@ -40,18 +82,19 @@ const CONFIG = {
     else if (data.lastName.length > 60 || !NAME_RE.test(data.lastName)) errors.lastName = 'Please use letters only.';
     if (!data.email) errors.email = 'Please enter your email address.';
     else if (data.email.length > 254 || !EMAIL_RE.test(data.email)) errors.email = 'Please enter a valid email address.';
+    if (phoneError) errors.phone = phoneError;
     return errors;
   }
 
   function showFieldErrors(errors) {
-    ['firstName', 'lastName', 'email'].forEach((name) => {
+    FIELDS.forEach((name) => {
       const input = form.elements[name];
       const msg = errors[name] || '';
       document.getElementById(name + '-err').textContent = msg;
       if (msg) input.setAttribute('aria-invalid', 'true');
       else input.removeAttribute('aria-invalid');
     });
-    const first = ['firstName', 'lastName', 'email'].find((n) => errors[n]);
+    const first = FIELDS.find((n) => errors[n]);
     if (first) form.elements[first].focus();
   }
 
@@ -112,12 +155,14 @@ const CONFIG = {
     e.preventDefault();
     showFormMessage('');
 
+    const phone = readPhone();
     const data = {
       firstName: clean(form.elements.firstName.value),
       lastName: clean(form.elements.lastName.value),
-      email: String(form.elements.email.value || '').trim().toLowerCase()
+      email: String(form.elements.email.value || '').trim().toLowerCase(),
+      phone: phone.number
     };
-    const errors = validate(data);
+    const errors = validate(data, phone.error);
     showFieldErrors(errors);
     if (Object.keys(errors).length) return;
 
