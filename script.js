@@ -12,6 +12,7 @@ const CONFIG = {
 (function () {
   'use strict';
 
+  const REQUEST_TIMEOUT_MS = 30000;
   const pageLoadedAt = Date.now();
   const previewMode = !/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/.test(CONFIG.endpoint);
 
@@ -89,14 +90,22 @@ const CONFIG = {
       }
       return { ok: true, code: 'ok', message: "You're on the list! Check your inbox for the details." };
     }
-    // text/plain avoids a browser "preflight" request that Apps Script can't answer.
-    const res = await fetch(CONFIG.endpoint, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify(payload)
-    });
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    return res.json();
+    // Google can occasionally be slow. Give up after 30 s so the button never hangs forever.
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+    try {
+      // text/plain avoids a browser "preflight" request that Apps Script can't answer.
+      const res = await fetch(CONFIG.endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload),
+        signal: controller.signal
+      });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return await res.json();
+    } finally {
+      clearTimeout(timer);
+    }
   }
 
   form.addEventListener('submit', async (e) => {
@@ -134,7 +143,7 @@ const CONFIG = {
         showFormMessage(result.message || 'Something went wrong. Please try again.', true);
       }
     } catch (err) {
-      showFormMessage('We couldn’t reach the guest list. Please check your connection and try again.', true);
+      showFormMessage('We couldn’t reach the guest list in time. Please check your connection and try again.', true);
     } finally {
       setLoading(false);
     }
