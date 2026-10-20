@@ -13,10 +13,11 @@ const CONFIG = {
   'use strict';
 
   const REQUEST_TIMEOUT_MS = 30000;
+  const BUTTON_LABEL = 'Claim my free entry →';
   const pageLoadedAt = Date.now();
   const previewMode = !/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/.test(CONFIG.endpoint);
 
-  const form = document.getElementById('signup');
+  const form = document.getElementById('signup-form');
   const button = document.getElementById('submit');
   const formMsg = document.getElementById('form-msg');
   const formView = document.getElementById('form-view');
@@ -26,7 +27,7 @@ const CONFIG = {
 
   if (previewMode) document.getElementById('demo-badge').hidden = false;
 
-  const FIELDS = ['firstName', 'lastName', 'email', 'phone'];
+  const FIELDS = ['name', 'email', 'phone'];
 
   // Same rules as the backend (backend/Code.gs) so visitors get instant feedback.
   const NAME_RE = /^\p{L}[\p{L}\p{M} .'’-]*$/u;
@@ -35,6 +36,15 @@ const CONFIG = {
 
   const clean = (v) => String(v || '').replace(/\s+/g, ' ').trim();
   const normalizePhone = (v) => String(v || '').replace(/[\s().-]/g, '').replace(/^00/, '+');
+
+  // The form has one "Your name" box. The Sheet keeps two columns, so split at the first space:
+  // "Mary Jane Smith" -> first "Mary", last "Jane Smith".
+  function splitName(full) {
+    const text = clean(full);
+    const at = text.indexOf(' ');
+    if (at === -1) return { firstName: text, lastName: '' };
+    return { firstName: text.slice(0, at), lastName: text.slice(at + 1) };
+  }
 
   // Country picker for the phone field (vendor/intl-tel-input): flag, dial code,
   // search, formatting and Google's phone rules for every country.
@@ -54,11 +64,11 @@ const CONFIG = {
   } catch (err) {
     iti = null;
   }
-  if (!iti) phoneInput.placeholder = '+34 612 345 678';
+  if (!iti) phoneInput.placeholder = '+34 600 00 00 00';
 
   // Returns { number: '+34612345678', error: '' }. The number is only set when it is valid.
   function readPhone() {
-    if (!phoneInput.value.trim()) return { number: '', error: 'Please enter your phone number.' };
+    if (!phoneInput.value.trim()) return { number: '', error: 'Please enter your WhatsApp number.' };
     if (iti) {
       if (iti.isValidNumberPrecise()) return { number: iti.getNumber(), error: '' };
       const reason = iti.getValidationError();
@@ -76,10 +86,10 @@ const CONFIG = {
 
   function validate(data, phoneError) {
     const errors = {};
-    if (!data.firstName) errors.firstName = 'Please enter your first name.';
-    else if (data.firstName.length > 60 || !NAME_RE.test(data.firstName)) errors.firstName = 'Please use letters only.';
-    if (!data.lastName) errors.lastName = 'Please enter your last name.';
-    else if (data.lastName.length > 60 || !NAME_RE.test(data.lastName)) errors.lastName = 'Please use letters only.';
+    const bad = (s) => !s || s.length > 60 || !NAME_RE.test(s);
+    if (!data.firstName) errors.name = 'Please enter your first and last name.';
+    else if (!data.lastName) errors.name = 'Please enter your first and last name.';
+    else if (bad(data.firstName) || bad(data.lastName)) errors.name = 'Please use letters only.';
     if (!data.email) errors.email = 'Please enter your email address.';
     else if (data.email.length > 254 || !EMAIL_RE.test(data.email)) errors.email = 'Please enter a valid email address.';
     if (phoneError) errors.phone = phoneError;
@@ -101,7 +111,7 @@ const CONFIG = {
   function setLoading(on) {
     button.disabled = on;
     button.classList.toggle('is-loading', on);
-    button.querySelector('.btn-label').textContent = on ? 'Adding you' : 'Join the list';
+    button.querySelector('.btn-label').textContent = on ? 'Adding you' : BUTTON_LABEL;
   }
 
   function showFormMessage(text, isError) {
@@ -115,6 +125,7 @@ const CONFIG = {
     formView.hidden = true;
     doneView.hidden = false;
     doneView.focus();
+    doneView.scrollIntoView({ block: 'center' });
   }
 
   // Clear a field's error as soon as the visitor edits it.
@@ -131,7 +142,7 @@ const CONFIG = {
       if (payload.email === 'taken@example.com') {
         return { ok: true, code: 'duplicate', message: "You're already registered with this email address." };
       }
-      return { ok: true, code: 'ok', message: "You're on the list! Check your inbox for the details." };
+      return { ok: true, code: 'ok', message: "You're on the list! Check your inbox for your ticket." };
     }
     // Google can occasionally be slow. Give up after 30 s so the button never hangs forever.
     const controller = new AbortController();
@@ -156,9 +167,10 @@ const CONFIG = {
     showFormMessage('');
 
     const phone = readPhone();
+    const name = splitName(form.elements.name.value);
     const data = {
-      firstName: clean(form.elements.firstName.value),
-      lastName: clean(form.elements.lastName.value),
+      firstName: name.firstName,
+      lastName: name.lastName,
       email: String(form.elements.email.value || '').trim().toLowerCase(),
       phone: phone.number
     };
@@ -179,12 +191,12 @@ const CONFIG = {
         showDone('Already on the list', result.message);
       } else if (result.ok && result.queued) {
         // Saved, but the email is waiting (very busy day, or a temporary problem).
-        showDone('You’re on the list, ' + data.firstName, 'Your spot is saved. We’ll email the details to ' + data.email + ' soon, so please keep an eye on your inbox, spam and Promotions folders.');
+        showDone('You’re on the list!', 'Your spot is saved. We’ll email your ticket to ' + data.email + ' soon, so please keep an eye on your inbox, spam and Promotions folders.');
       } else if (result.ok) {
-        showDone('You’re on the list, ' + data.firstName, 'We’ve sent the details to ' + data.email + '. If it isn’t in your inbox in a few minutes, check your spam or Promotions folder.');
+        showDone('You’re on the list!', 'Check your inbox for your ticket. If it isn’t there in a few minutes, look in your spam or Promotions folder.');
       } else if (result.code === 'invalid' && Array.isArray(result.fields)) {
         const errs = {};
-        result.fields.forEach((f) => { errs[f] = 'Please check this field.'; });
+        result.fields.forEach((f) => { errs[f === 'firstName' || f === 'lastName' ? 'name' : f] = 'Please check this field.'; });
         showFieldErrors(errs);
         showFormMessage(result.message, true);
       } else {

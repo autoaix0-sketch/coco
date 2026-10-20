@@ -3,61 +3,61 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>COCO — Guest List</title>
-  <meta name="description" content="Join the COCO guest list.">
-  <meta name="theme-color" content="#4a050c">
+  <title>Barcelona Guest List: Free Club Entry Every Night | COCO</title>
+  <meta name="description" content="Free guest list for Barcelona's best clubs. Claim your free entry in 20 seconds, get your ticket by email and walk right in.">
+  <meta name="theme-color" content="#F6F1EC">
   <!-- Fonts: loaded from Google Fonts for now. Before launch we plan to host them
        ourselves so visitors' browsers don't contact Google (privacy). -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..500&family=Poiret+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet">
   <!-- Country picker for the phone field (intl-tel-input v29.5.3, MIT), hosted here, not on a CDN. -->
   <link rel="stylesheet" href="vendor/intl-tel-input/css/intlTelInput.min.css">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="grain" aria-hidden="true"></div>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M12 3.5a8.5 8.5 0 0 0-7.3 12.9L3.5 20.5l4.2-1.1A8.5 8.5 0 1 0 12 3.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  </svg>
 
-  <main class="page">
-    <section class="intro" aria-labelledby="brand">
-      <p class="eyebrow reveal" style="--d:0">Private invitation</p>
-      <h1 id="brand" class="brand reveal" style="--d:1">CO<span class="brand-o">CO</span></h1>
-      <p class="tagline reveal" style="--d:2">Guest List</p>
+  <div class="wrap">
+    <!-- 1. Top bar -->
+    <header class="top">
+      <a class="logo logo-sm" href="./" aria-label="COCO">CO<span class="logo-o">CO</span></a>
+      <nav class="top-menu" aria-label="Main">
+        <a href="clubs.html">Clubs</a>
+        <a href="#tonight">Tonight</a>
+        <a class="btn-wa" data-link="whatsapp" href="#"><svg aria-hidden="true"><use href="#i-chat"/></svg>WhatsApp now</a>
+      </nav>
+    </header>
 
-      <!-- Week programme from the owner. Keep in sync with CLUBS/WEEK in backend/Code.gs. -->
-      <dl class="details reveal" style="--d:3" aria-label="Weekly programme">
-        <div><dt>Opium</dt><dd>Monday to Friday + Sunday<br>before 1:00am</dd></div>
-        <div><dt>Sutton</dt><dd>Wednesday to Friday<br>before 1:00am</dd></div>
-        <div><dt>Otto Zutz</dt><dd>Thursday to Saturday<br>before 1:30am</dd></div>
-        <div><dt>CDLC</dt><dd>Friday + Saturday before 1:00am<br>Sunday 7:00pm–11:00pm</dd></div>
-        <div class="entry"><dt>Entry</dt><dd>Free at the times shown</dd></div>
-      </dl>
-    </section>
+    <main>
+      <!-- 2. Top of page -->
+      <section class="hero" aria-labelledby="headline">
+        <p class="badge" id="badge" hidden><span class="badge-dot" aria-hidden="true"></span><span id="badge-text"></span></p>
+        <p class="logo logo-xl" aria-hidden="true">CO<span class="logo-o">CO</span></p>
+        <p class="kicker">Guest list · Barcelona</p>
+        <h1 class="headline" id="headline">Barcelona's best clubs.<span>Free entry, every night.</span></h1>
+      </section>
 
-    <section class="card reveal" style="--d:4" aria-labelledby="form-title">
-      <div class="card-inner">
+      <!-- 3. Sign-up form -->
+      <section class="card" id="signup" aria-labelledby="form-title">
         <div id="form-view">
-          <h2 id="form-title" class="card-title">Add your name</h2>
-          <p class="card-sub">Your ticket will arrive in your inbox.</p>
+          <h2 class="card-title" id="form-title">You're one step from the list</h2>
 
-          <form id="signup" novalidate>
+          <form id="signup-form" novalidate>
             <div class="field">
-              <label for="firstName">First name</label>
-              <input id="firstName" name="firstName" type="text" autocomplete="given-name" maxlength="60" required aria-describedby="firstName-err">
-              <p class="err" id="firstName-err" aria-live="polite"></p>
+              <label for="name">Your name</label>
+              <input id="name" name="name" type="text" autocomplete="name" maxlength="121" placeholder="First and last name" required aria-describedby="name-err">
+              <p class="err" id="name-err" aria-live="polite"></p>
             </div>
             <div class="field">
-              <label for="lastName">Last name</label>
-              <input id="lastName" name="lastName" type="text" autocomplete="family-name" maxlength="60" required aria-describedby="lastName-err">
-              <p class="err" id="lastName-err" aria-live="polite"></p>
-            </div>
-            <div class="field">
-              <label for="email">Email</label>
-              <input id="email" name="email" type="email" inputmode="email" autocomplete="email" maxlength="254" required aria-describedby="email-err">
+              <label for="email">Email · your ticket lands here</label>
+              <input id="email" name="email" type="email" inputmode="email" autocomplete="email" maxlength="254" placeholder="you@email.com" required aria-describedby="email-err">
               <p class="err" id="email-err" aria-live="polite"></p>
             </div>
             <div class="field">
-              <label for="phone">Phone number</label>
+              <label for="phone">WhatsApp</label>
               <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="30" required aria-describedby="phone-err">
               <p class="err" id="phone-err" aria-live="polite"></p>
             </div>
@@ -68,15 +68,15 @@
               <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
             </div>
 
-            <button type="submit" class="btn" id="submit">
-              <span class="btn-label">Join the list</span>
+            <button type="submit" class="btn btn-red" id="submit">
+              <span class="btn-label">Claim my free entry →</span>
               <span class="btn-spinner" aria-hidden="true"></span>
             </button>
             <p class="form-msg" id="form-msg" role="status" aria-live="polite"></p>
-
+            <p class="note">Free, always. Your ticket arrives instantly.</p>
             <p class="consent">
               By joining, you agree that we store your name, email and phone number to manage the
-              guest list, send you the event details and invite you to our WhatsApp group.
+              guest list, send you your ticket and invite you to our WhatsApp group.
               <!-- Privacy notice hidden until the owner approves it. To show it again, add:
                    <a href="privacy.html">Privacy notice</a>  (draft is in content/privacy-page-draft.html) -->
             </p>
@@ -85,20 +85,145 @@
 
         <div id="done-view" class="done" hidden tabindex="-1">
           <span class="done-mark" aria-hidden="true"></span>
-          <h2 class="card-title" id="done-title">You're on the list</h2>
+          <h2 class="card-title" id="done-title">You're on the list!</h2>
           <p class="card-sub" id="done-text"></p>
         </div>
-      </div>
-    </section>
-  </main>
+      </section>
 
-  <footer class="foot">
-    <span>© COCO</span>
-    <!-- Privacy link hidden until the owner approves the notice: <a href="privacy.html">Privacy</a> -->
-  </footer>
+      <!-- 4. The 3 steps -->
+      <ol class="steps" aria-label="How it works">
+        <li>
+          <span class="step-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 18 18 6"/></svg></span>
+          <span class="step-no">STEP 01</span>
+          <p class="step-title">Claim your spot</p>
+          <p class="step-sub">20 seconds</p>
+        </li>
+        <li>
+          <span class="step-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3.5" y="7" width="17" height="10" rx="2"/></svg></span>
+          <span class="step-no">STEP 02</span>
+          <p class="step-title">Ticket arrives</p>
+          <p class="step-sub">straight to your inbox</p>
+        </li>
+        <li>
+          <span class="step-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="8" y="3.5" width="8" height="17" rx="2"/></svg></span>
+          <span class="step-no">STEP 03</span>
+          <p class="step-title">Walk right in</p>
+          <p class="step-sub">show it at the door</p>
+        </li>
+      </ol>
+
+      <!-- 5. Club logos (each links to its card on the Clubs page) -->
+      <div class="group-head"><h2 class="group-title">Beach clubs</h2><span class="group-where">Port Olímpic</span></div>
+      <div class="tiles tiles-beach">
+        <a class="tile tile-beach" href="clubs.html#ku">KU</a>
+        <a class="tile tile-beach" href="clubs.html#opium">Opium</a>
+        <a class="tile tile-beach" href="clubs.html#shoko">Shôko</a>
+        <a class="tile tile-beach" href="clubs.html#cdlc">CDLC</a>
+      </div>
+
+      <div class="group-head"><h2 class="group-title">Downtown clubs</h2><span class="group-where">Eixample · Sant Gervasi · Gòtic</span></div>
+      <div class="tiles tiles-down">
+        <a class="tile" href="clubs.html#sutton">Sutton</a>
+        <a class="tile" href="clubs.html#ottozutz">Otto Zutz</a>
+        <a class="tile" href="clubs.html#labiblio">La Biblio</a>
+        <a class="tile" href="clubs.html#twenties">Twenties</a>
+        <a class="tile" href="clubs.html#luzdegas">Luz de Gas</a>
+        <a class="tile" href="clubs.html#cityhall">City Hall</a>
+        <a class="tile" href="clubs.html#jamboree">Jamboree</a>
+        <a class="tile" href="clubs.html#blingbling">Bling Bling</a>
+        <a class="tile" href="clubs.html#downtown">Downtown</a>
+      </div>
+      <a class="tile tile-all" href="clubs.html">All clubs →</a>
+
+      <!-- 6. Ticket preview -->
+      <h2 class="section-label">Your ticket looks like this</h2>
+      <div class="ticket">
+        <div class="ticket-main">
+          <p class="ticket-brand"><span class="logo">CO<span class="logo-o">CO</span></span><span class="ticket-sub">GUEST LIST</span></p>
+          <span class="ticket-label ticket-guest">Guest</span>
+          <p class="ticket-name">Your Name</p>
+          <div class="ticket-facts">
+            <div><span class="ticket-label">Entry</span><span class="ticket-free">Free</span></div>
+            <div><span class="ticket-label">Best arrival</span><span class="ticket-time">12:30–12:45</span></div>
+          </div>
+        </div>
+        <div class="ticket-side" aria-hidden="true">
+          <svg viewBox="0 0 7 7" shape-rendering="crispEdges"><rect width="7" height="7" fill="#fff"/><path d="M0 0h1v1h-1zM1 0h1v1h-1zM2 0h1v1h-1zM4 0h1v1h-1zM5 0h1v1h-1zM6 0h1v1h-1zM0 1h1v1h-1zM2 1h1v1h-1zM4 1h1v1h-1zM6 1h1v1h-1zM0 2h1v1h-1zM1 2h1v1h-1zM2 2h1v1h-1zM4 2h1v1h-1zM5 2h1v1h-1zM6 2h1v1h-1zM3 3h1v1h-1zM0 4h1v1h-1zM1 4h1v1h-1zM2 4h1v1h-1zM4 4h1v1h-1zM0 5h1v1h-1zM2 5h1v1h-1zM6 5h1v1h-1zM0 6h1v1h-1zM1 6h1v1h-1zM2 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1z" fill="#161315"/></svg>
+          <span>Show at door</span>
+        </div>
+      </div>
+
+      <!-- 7. Where are you going tonight? -->
+      <section class="card" id="tonight" aria-labelledby="tonight-title">
+        <h2 class="card-title" id="tonight-title">Where are you going tonight?</h2>
+        <p class="card-sub">Pick a night. Every club below is free with your ticket.</p>
+        <div class="days" id="days" role="group" aria-label="Pick a night"></div>
+        <p class="count" id="night-count" aria-live="polite"></p>
+        <ul class="rows" id="club-list"></ul>
+        <p class="arrive">Arrive 12:30–12:45 and you'll walk in just as the night starts.</p>
+        <a class="btn btn-black" href="#signup">Get my ticket for tonight</a>
+      </section>
+
+      <!-- 8. WhatsApp group -->
+      <section class="community" aria-labelledby="community-title">
+        <div class="community-head">
+          <span class="community-icon" aria-hidden="true"><svg><use href="#i-chat"/></svg></span>
+          <div>
+            <p class="community-small">The COCO community</p>
+            <h2 class="community-title" id="community-title">Join us on WhatsApp</h2>
+          </div>
+        </div>
+        <p class="community-text">Tonight's best parties, guest list drops before anyone else, and a direct line to our team. Meet other travellers going out in Barcelona.</p>
+        <a class="btn btn-green" data-link="group" href="#">Join the WhatsApp group →</a>
+      </section>
+
+      <!-- 9. Good to know -->
+      <section class="faq" aria-labelledby="faq-title">
+        <h2 id="faq-title">Good to know</h2>
+        <details open>
+          <summary>Is it really free?</summary>
+          <p>Yes. Joining and entry are free. Drinks inside are at the bar's prices.</p>
+        </details>
+        <details>
+          <summary>What should I wear?</summary>
+          <p>Smart casual. Clean sneakers are fine; save the sportswear, flip-flops and beach shorts for the day.</p>
+        </details>
+        <details>
+          <summary>When should I arrive?</summary>
+          <p>12:30–12:45 is the sweet spot. Free entry runs until 1:00, and until 1:30 at Otto Zutz and Twenties.</p>
+        </details>
+        <details>
+          <summary>Coming with friends?</summary>
+          <p>Send them this page. Everyone claims their own ticket in 20 seconds.</p>
+        </details>
+        <details>
+          <summary>Do I need ID?</summary>
+          <p>Yes, clubs are 18+. Bring your passport or ID card.</p>
+        </details>
+      </section>
+    </main>
+
+    <!-- 10. Bottom of page -->
+    <footer class="foot">
+      <a class="btn btn-green" data-link="group" href="#">Join the WhatsApp group</a>
+      <div class="foot-bar">
+        <span class="logo logo-sm">CO<span class="logo-o">CO</span></span>
+        <nav class="foot-links" aria-label="Footer">
+          <a data-link="instagram" href="#">Instagram</a>
+          <a href="clubs.html">Clubs</a>
+        </nav>
+      </div>
+      <p class="foot-small">Joining sends your ticket by email and adds you to our WhatsApp group for weekly party news.</p>
+      <!-- Privacy link hidden until the owner approves the notice: <a href="privacy.html">Privacy</a> -->
+    </footer>
+  </div>
+
+  <a class="wa-float" data-link="whatsapp" href="#"><span class="wa-float-icon"><svg aria-hidden="true" width="18" height="18"><use href="#i-chat"/></svg></span>WhatsApp now</a>
 
   <p class="demo-badge" id="demo-badge" hidden>Preview mode — nothing is saved</p>
 
+  <script src="clubs-data.js"></script>
+  <script src="page.js"></script>
   <script src="vendor/intl-tel-input/js/intlTelInputWithUtils.min.js"></script>
   <script src="script.js"></script>
 </body>
