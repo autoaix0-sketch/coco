@@ -163,8 +163,8 @@ input:-webkit-autofill { -webkit-text-fill-color: var(--ink); -webkit-box-shadow
 .group-title { font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; white-space: nowrap; }
 .group-where { font-size: 13px; color: var(--grey); text-align: right; }
 .tiles { display: grid; gap: 8px; }
-.tiles-beach { grid-template-columns: repeat(4, 1fr); }
-.tiles-down { grid-template-columns: repeat(3, 1fr); }
+.tiles-beach { grid-template-columns: repeat(3, 1fr); }
+.tiles-down { grid-template-columns: repeat(2, 1fr); }
 .tile {
   display: grid; place-items: center; min-height: 54px; padding: 8px 4px; border-radius: 14px;
   border: 1px solid var(--line); background: var(--card); color: var(--ink);
@@ -173,6 +173,27 @@ input:-webkit-autofill { -webkit-text-fill-color: var(--ink); -webkit-box-shadow
 .tile-beach { background: var(--ink); border-color: var(--ink); color: #fff; }
 .tile:hover { filter: brightness(0.94); }
 .tile-all { display: inline-grid; margin-top: 8px; padding: 14px 18px; background: var(--ink); border-color: var(--ink); color: #fff; font-size: 13px; letter-spacing: 0.06em; }
+
+/* ---------- Nights with COCO: photos of past events, swiped sideways (each opens the form) ---------- */
+.shots {
+  display: flex; gap: 8px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth;
+  margin: 0 calc(-1 * var(--gutter)); padding: 0 var(--gutter); scroll-padding: 0 var(--gutter);
+  scrollbar-width: none; overscroll-behavior-x: contain;
+}
+.shots::-webkit-scrollbar { display: none; }
+.shot { flex: 0 0 62%; max-width: 240px; aspect-ratio: 4 / 5; border-radius: 20px; overflow: hidden; scroll-snap-align: start; background: var(--line); }
+.shot img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.shots-nav { display: none; gap: 6px; }
+.shots-btn {
+  width: 34px; height: 34px; padding: 0; border: 1px solid var(--line); border-radius: 50%;
+  background: var(--card); color: var(--ink); font-size: 20px; line-height: 1; cursor: pointer;
+}
+.shots-btn:hover { filter: brightness(0.94); }
+/* Phones swipe; computers with a mouse get the ‹ › buttons instead of the "swipe →" hint. */
+@media (hover: hover) and (pointer: fine) {
+  .shots-hint { display: none; }
+  .shots-nav { display: flex; }
+}
 
 /* ---------- Ticket preview: the real ticket image (the same file is emailed to guests) ---------- */
 .section-label { margin: 38px 0 12px; font-size: 13px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; }
@@ -292,6 +313,6 @@ details p { padding: 0 0 16px; font-size: 15.5px; line-height: 1.55; color: var(
 @keyframes spin { to { transform: rotate(360deg); } }
 @keyframes pop { from { opacity: 0; transform: scale(0.6); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
+  html, .shots { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }

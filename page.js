@@ -87,6 +87,16 @@
     show(tonight);
   }
 
+  /* ---------- Home page: the ‹ › buttons move the event photos two cards at a time ---------- */
+  const shots = document.getElementById('shots');
+  if (shots) {
+    document.querySelectorAll('.shots-btn').forEach((b) => b.addEventListener('click', () => {
+      const card = shots.querySelector('.shot');
+      const step = card ? card.getBoundingClientRect().width + 8 : shots.clientWidth / 2;
+      shots.scrollBy({ left: Number(b.dataset.dir) * step * 2 }); // smooth unless the visitor asked for less motion (CSS)
+    }));
+  }
+
   /* ---------- Clubs page: All / Beach / Downtown ---------- */
   const tabs = document.querySelectorAll('[data-tab]');
   if (tabs.length) {

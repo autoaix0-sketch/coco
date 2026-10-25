@@ -1,6 +1,7 @@
 /* COCO Guest List — the clubs, in one place (used by the home page and the clubs page).
  *
- * The owner's club table (handoff PDF, 2026-10-19). Keep the days and times in sync with
+ * The 5 clubs still on the list and their nights (owner's week plan, 2026-10-25); times, areas
+ * and blurbs from the handoff PDF (2026-10-19). Keep the days and times in sync with
  * WEEK in backend/Code.gs — backend/email.test.js checks that the two agree.
  *
  * Days are numbered like JavaScript: 0 = Sunday ... 6 = Saturday.
@@ -15,57 +16,25 @@ const COCO_LINKS = {
 
 const COCO_CLUBS = [
   { id: 'ku', name: 'KU', type: 'beach', area: 'Port Olímpic · formerly Pacha',
-    nights: [0, 1, 2, 3, 4, 5, 6], until: '1:00', special: {},
-    freeLine: 'Free: every night, before 1:00',
+    nights: [1, 2, 3, 4, 5], until: '1:00', special: {},
+    freeLine: 'Free: Mon–Fri, before 1:00',
     blurb: 'The old Pacha, right on the sand. House in the main room, reggaeton in the second.' },
   { id: 'opium', name: 'Opium', type: 'beach', area: 'Port Olímpic',
     nights: [1, 2, 3, 4, 5, 0], until: '1:00', special: {},
     freeLine: 'Free: Mon–Fri + Sun, before 1:00',
     blurb: 'Barcelona’s best-known beach club, with a huge terrace over the sea.' },
-  { id: 'shoko', name: 'Shôko', type: 'beach', area: 'Port Olímpic',
-    nights: [1, 2, 3, 4, 0], until: '1:00', special: {},
-    freeLine: 'Free: Mon–Thu + Sun, before 1:00',
-    blurb: 'Dinner, then Latin and reggaeton on a terrace facing the Mediterranean.' },
   { id: 'cdlc', name: 'CDLC', type: 'beach', area: 'Port Olímpic',
     nights: [5, 6], until: '1:00', special: { 0: '7–11 pm' },
     freeLine: 'Free: Fri–Sat before 1:00 · Sun 7–11 pm',
     blurb: 'Dinner on the beach, then an intimate, glamorous lounge club.' },
   { id: 'sutton', name: 'Sutton', type: 'downtown', area: 'Sant Gervasi',
-    nights: [3, 4, 5, 6, 0], until: '1:00', special: {},
-    freeLine: 'Free: Wed–Sun, before 1:00',
+    nights: [2, 3, 4, 5], until: '1:00', special: {},
+    freeLine: 'Free: Tue–Fri, before 1:00',
     blurb: 'Mirrors, velvet and golden light. One of the city’s most stylish rooms.' },
   { id: 'ottozutz', name: 'Otto Zutz', type: 'downtown', area: 'Sant Gervasi',
-    nights: [5, 6], until: '1:30', special: {},
-    freeLine: 'Free: Fri–Sat, before 1:30',
-    blurb: 'Three floors, three sounds, and a crowd of Barcelona locals.' },
-  { id: 'labiblio', name: 'La Biblio', type: 'downtown', area: 'Sant Gervasi',
-    nights: [4, 5, 6], until: '1:00', special: {},
-    freeLine: 'Free: Thu–Sat, before 1:00',
-    blurb: 'Smart and elegant, steps from L’Illa Diagonal. Dress up for this one.' },
-  { id: 'twenties', name: 'Twenties', type: 'downtown', area: 'Eixample',
-    nights: [5, 6], until: '1:30', special: {},
-    freeLine: 'Free: Fri–Sat, before 1:30',
-    blurb: 'Lasers, confetti and two rooms of high energy.' },
-  { id: 'luzdegas', name: 'Luz de Gas', type: 'downtown', area: 'Sant Gervasi',
-    nights: [5, 6], until: '1:00', special: {},
-    freeLine: 'Free: Fri–Sat, before 1:00',
-    blurb: 'A 1940s cinema turned club, with a rococo main room.' },
-  { id: 'cityhall', name: 'City Hall', type: 'downtown', area: 'Plaça Catalunya',
-    nights: [1, 2], until: '1:00', special: {},
-    freeLine: 'Free: Mon–Tue, before 1:00',
-    blurb: 'One room, all techno and house, right off Plaça Catalunya.' },
-  { id: 'jamboree', name: 'Jamboree', type: 'downtown', area: 'Gothic Quarter',
-    nights: [0, 1, 2, 3, 4, 5, 6], until: '1:00', special: {},
-    freeLine: 'Free: every night, before 1:00',
-    blurb: 'A stone cellar under the arches of Plaça Reial. Small and packed.' },
-  { id: 'blingbling', name: 'Bling Bling', type: 'downtown', area: 'Eixample',
-    nights: [3, 4, 5, 6, 0], until: '1:00', special: {},
-    freeLine: 'Free: Wed–Sun, before 1:00',
-    blurb: 'A small, upscale room built around table service.' },
-  { id: 'downtown', name: 'Downtown', type: 'downtown', area: 'Eixample',
-    nights: [5, 6], until: '1:00', special: {},
-    freeLine: 'Free: Fri–Sat, before 1:00',
-    blurb: 'A central club with a young local crowd.' }
+    nights: [4, 5, 6], until: '1:30', special: {},
+    freeLine: 'Free: Thu–Sat, before 1:30',
+    blurb: 'Three floors, three sounds, and a crowd of Barcelona locals.' }
 ];
 
 // A "night" runs until 1:30am Barcelona time: 00:45 on Saturday still belongs to Friday night.

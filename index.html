@@ -112,30 +112,52 @@
         </li>
       </ol>
 
-      <!-- 5. Club logos (each links to its card on the Clubs page) -->
+      <!-- 5. Nights with COCO: photos of past events. The cards are written by tools/make-gallery.py. -->
+      <section class="gallery" aria-labelledby="gallery-title">
+        <div class="group-head">
+          <h2 class="group-title" id="gallery-title">Nights with COCO</h2>
+          <span class="group-where shots-hint" aria-hidden="true">swipe →</span>
+          <span class="shots-nav">
+            <button class="shots-btn" type="button" data-dir="-1" aria-label="Previous photos" aria-controls="shots">‹</button>
+            <button class="shots-btn" type="button" data-dir="1" aria-label="Next photos" aria-controls="shots">›</button>
+          </span>
+        </div>
+        <div class="shots" id="shots">
+          <!-- gallery:start -->
+          <a class="shot" href="#signup"><img src="img/events/01.webp" width="720" height="900" alt="Rooftop party with a DJ above the port at night" loading="lazy" decoding="async"></a>
+          <a class="shot" href="#signup"><img src="img/events/02.webp" width="720" height="900" alt="Guests smiling around a dinner table" loading="lazy" decoding="async"></a>
+          <a class="shot" href="#signup"><img src="img/events/03.webp" width="720" height="900" alt="Friends walking through the old town at night" loading="lazy" decoding="async"></a>
+          <a class="shot" href="#signup"><img src="img/events/04.webp" width="720" height="900" alt="Seafood paella on the table" loading="lazy" decoding="async"></a>
+          <a class="shot" href="#signup"><img src="img/events/05.webp" width="720" height="900" alt="Bartender pouring cocktails for a laughing group" loading="lazy" decoding="async"></a>
+          <a class="shot" href="#signup"><img src="img/events/06.webp" width="720" height="900" alt="A plate of turrón shared during a tasting" loading="lazy" decoding="async"></a>
+          <a class="shot" href="#signup"><img src="img/events/07.webp" width="720" height="900" alt="Friends toasting with drinks in a bar" loading="lazy" decoding="async"></a>
+          <a class="shot" href="#signup"><img src="img/events/08.webp" width="720" height="900" alt="A guest raising a glass of beer at the bar" loading="lazy" decoding="async"></a>
+          <a class="shot" href="#signup"><img src="img/events/09.webp" width="720" height="900" alt="Friends with drinks on a terrace over the port" loading="lazy" decoding="async"></a>
+          <a class="shot" href="#signup"><img src="img/events/10.webp" width="720" height="900" alt="Inside an old wooden tapas bar" loading="lazy" decoding="async"></a>
+          <a class="shot" href="#signup"><img src="img/events/11.webp" width="720" height="900" alt="A group laughing on a night walk through narrow streets" loading="lazy" decoding="async"></a>
+          <a class="shot" href="#signup"><img src="img/events/12.webp" width="720" height="900" alt="Guests tasting beer at the bar counter" loading="lazy" decoding="async"></a>
+          <a class="shot" href="#signup"><img src="img/events/13.webp" width="720" height="900" alt="The group visiting a market exhibition" loading="lazy" decoding="async"></a>
+          <a class="shot" href="#signup"><img src="img/events/14.webp" width="720" height="900" alt="Turrón tasting, guests looking on" loading="lazy" decoding="async"></a>
+          <!-- gallery:end -->
+        </div>
+      </section>
+
+      <!-- 6. Club logos (each links to its card on the Clubs page) -->
       <div class="group-head"><h2 class="group-title">Beach clubs</h2><span class="group-where">Port Olímpic</span></div>
       <div class="tiles tiles-beach">
         <a class="tile tile-beach" href="clubs.html#ku">KU</a>
         <a class="tile tile-beach" href="clubs.html#opium">Opium</a>
-        <a class="tile tile-beach" href="clubs.html#shoko">Shôko</a>
         <a class="tile tile-beach" href="clubs.html#cdlc">CDLC</a>
       </div>
 
-      <div class="group-head"><h2 class="group-title">Downtown clubs</h2><span class="group-where">Eixample · Sant Gervasi · Gòtic</span></div>
+      <div class="group-head"><h2 class="group-title">Downtown clubs</h2><span class="group-where">Sant Gervasi</span></div>
       <div class="tiles tiles-down">
         <a class="tile" href="clubs.html#sutton">Sutton</a>
         <a class="tile" href="clubs.html#ottozutz">Otto Zutz</a>
-        <a class="tile" href="clubs.html#labiblio">La Biblio</a>
-        <a class="tile" href="clubs.html#twenties">Twenties</a>
-        <a class="tile" href="clubs.html#luzdegas">Luz de Gas</a>
-        <a class="tile" href="clubs.html#cityhall">City Hall</a>
-        <a class="tile" href="clubs.html#jamboree">Jamboree</a>
-        <a class="tile" href="clubs.html#blingbling">Bling Bling</a>
-        <a class="tile" href="clubs.html#downtown">Downtown</a>
       </div>
       <a class="tile tile-all" href="clubs.html">All clubs →</a>
 
-      <!-- 6. Ticket preview -->
+      <!-- 7. Ticket preview -->
       <h2 class="section-label">Your ticket looks like this</h2>
       <div class="ticket">
         <div class="ticket-main">
@@ -153,7 +175,7 @@
         </div>
       </div>
 
-      <!-- 7. Where are you going tonight? -->
+      <!-- 8. Where are you going tonight? -->
       <section class="card" id="tonight" aria-labelledby="tonight-title">
         <h2 class="card-title" id="tonight-title">Where are you going tonight?</h2>
         <p class="card-sub">Pick a night. Every club below is free with your ticket.</p>
@@ -164,7 +186,7 @@
         <a class="btn btn-black" href="#signup">Get my ticket for tonight</a>
       </section>
 
-      <!-- 8. WhatsApp group -->
+      <!-- 9. WhatsApp group -->
       <section class="community" aria-labelledby="community-title">
         <div class="community-head">
           <span class="community-icon" aria-hidden="true"><svg><use href="#i-chat"/></svg></span>
@@ -177,7 +199,7 @@
         <a class="btn btn-green" data-link="group" href="#">Join the WhatsApp group →</a>
       </section>
 
-      <!-- 9. Good to know -->
+      <!-- 10. Good to know -->
       <section class="faq" aria-labelledby="faq-title">
         <h2 id="faq-title">Good to know</h2>
         <details open>
@@ -190,7 +212,7 @@
         </details>
         <details>
           <summary>When should I arrive?</summary>
-          <p>12:30–12:45 is the sweet spot. Free entry runs until 1:00, and until 1:30 at Otto Zutz and Twenties.</p>
+          <p>12:30–12:45 is the sweet spot. Free entry runs until 1:00, and until 1:30 at Otto Zutz.</p>
         </details>
         <details>
           <summary>Coming with friends?</summary>
@@ -203,7 +225,7 @@
       </section>
     </main>
 
-    <!-- 10. Bottom of page -->
+    <!-- 11. Bottom of page -->
     <footer class="foot">
       <a class="btn btn-green" data-link="group" href="#">Join the WhatsApp group</a>
       <div class="foot-bar">
